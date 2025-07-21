@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ListView: View {
     
-    @State var items = [
+    @State private var items = [
         "First Item!",
         "Second Item",
         "Third Item"
@@ -21,7 +21,7 @@ struct ListView: View {
                 ListRowView(title: item)
             }
         }
-        .listStyle(PlainListStyle())
+        .listStyle(.plain)
         .navigationTitle("Todo List 📝")
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
@@ -30,7 +30,7 @@ struct ListView: View {
                 }
             }
             ToolbarItem(placement: .topBarTrailing) {
-                NavigationLink("Add", destination: Text("Destination"))
+                NavigationLink("Add", destination: AddView())
             }
         }
     }
