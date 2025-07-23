@@ -10,7 +10,13 @@ import SwiftUI
 @Observable
 class ListViewModel {
     
-    var items: [Item] = []
+    var items: [Item] = [] {
+        didSet {
+            saveItems()
+        }
+    }
+    
+    let itemsKey: String = "items_list"
     
     init() {
         getItems()
@@ -23,12 +29,12 @@ class ListViewModel {
     }
     
     func getItems() {
-        let newItems: [Item] = [
-            Item(title: "First Item!", isCompleted: false),
-            Item(title: "Second Item!", isCompleted: true),
-            Item(title: "Third Item!", isCompleted: false)
-        ]
-        items.append(contentsOf: newItems)
+        guard
+            let data = UserDefaults.standard.data(forKey: itemsKey),
+            let savedItems = try? JSONDecoder().decode([Item].self, from: data)
+        else { return }
+        
+        self.items = savedItems        
     }
     
     func updateItem(item: Item) {
@@ -43,5 +49,11 @@ class ListViewModel {
     
     func moveItem(from: IndexSet, to: Int) {
         items.move(fromOffsets: from, toOffset: to)
+    }
+    
+    func saveItems() {
+        if let encodedData = try? JSONEncoder().encode(items) {
+            UserDefaults.standard.setValue(encodedData, forKey: itemsKey)
+        }
     }
 }
