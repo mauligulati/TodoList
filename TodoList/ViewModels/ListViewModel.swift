@@ -16,6 +16,12 @@ class ListViewModel {
         getItems()
     }
     
+    //CRUD Functions - Create(add), Read(get), Update, Delete
+    
+    func addItem(title: String) {
+        items.append(Item(title: title, isCompleted: false))
+    }
+    
     func getItems() {
         let newItems: [Item] = [
             Item(title: "First Item!", isCompleted: false),
@@ -23,6 +29,12 @@ class ListViewModel {
             Item(title: "Third Item!", isCompleted: false)
         ]
         items.append(contentsOf: newItems)
+    }
+    
+    func updateItem(item: Item) {
+        if let index = items.firstIndex(where: { $0.id == item.id }) {
+            items[index] = item.updateCompletion()
+        }
     }
     
     func deleteItem(indexSet:  IndexSet) {

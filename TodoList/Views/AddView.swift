@@ -9,7 +9,12 @@ import SwiftUI
 
 struct AddView: View {
     
+    @Environment(\.presentationMode) var presentationMode
+    @Environment(ListViewModel.self) var listViewModel
     @State private var textFieldText: String = ""
+    
+    @State private var showAlert: Bool = false
+    @State private var alertTitle: String = ""
     
     var body: some View {
         ScrollView {
@@ -24,7 +29,7 @@ struct AddView: View {
                     )
                 
                 Button {
-                    //TODO: Save action
+                    saveItem()
                 } label: {
                     Text("Save".uppercased())
                         .foregroundStyle(.white)
@@ -42,6 +47,29 @@ struct AddView: View {
         }
         .scrollDismissesKeyboard(.interactively)
         .navigationTitle("Add an item 🖊️")
+        .alert(isPresented: $showAlert) {
+            getAlert()
+        }
+    }
+    
+    func saveItem() {
+        if textIsAppropriate() {
+            listViewModel.addItem(title: textFieldText)
+            presentationMode.wrappedValue.dismiss()
+        }
+    }
+    
+    func textIsAppropriate() -> Bool {
+        if textFieldText.count < 3 {
+            alertTitle = "Your task must be at least 3 characters long."
+            showAlert.toggle()
+            return false
+        }
+        return true
+    }
+    
+    func getAlert() -> Alert {
+        Alert(title: Text(alertTitle))
     }
 }
 
@@ -49,4 +77,5 @@ struct AddView: View {
     NavigationStack {
         AddView()
     }
+    .environment(ListViewModel())
 }
