@@ -9,22 +9,16 @@ import SwiftUI
 
 struct ListView: View {
     
-    @State private var items: [Item] = [
-        Item(title: "First Item!", isCompleted: false),
-        Item(title: "Second Item!", isCompleted: true),
-        Item(title: "Third Item!", isCompleted: false)
-    ]
-    
+    @Environment(ListViewModel.self) var listViewModel
     @State private var editMode: EditMode = .inactive
 
-    
     var body: some View {
         List {
-            ForEach(items) { item in
+            ForEach(listViewModel.items) { item in
                 ListRowView(item: item)
             }
-            .onDelete(perform: deleteItem)
-            .onMove(perform: moveItem)
+            .onDelete(perform: listViewModel.deleteItem)
+            .onMove(perform: listViewModel.moveItem)
         }
         .listStyle(.plain)
         .navigationTitle("Todo List 📝")
@@ -40,16 +34,7 @@ struct ListView: View {
                 NavigationLink("Add", destination: AddView())
             }
         }
-        .environment(\.editMode, $editMode) // ✅ this connects the list to the custom edit mode
-
-    }
-    
-    func deleteItem(indexSet:  IndexSet) {
-        items.remove(atOffsets: indexSet)
-    }
-    
-    func moveItem(from: IndexSet, to: Int) {
-        items.move(fromOffsets: from, toOffset: to)
+        .environment(\.editMode, $editMode) // connects the list to the custom edit mode
     }
 }
 
@@ -57,4 +42,5 @@ struct ListView: View {
     NavigationStack {
         ListView()
     }
+    .environment(ListViewModel())
 }
