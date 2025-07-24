@@ -18,6 +18,7 @@ struct TodoListApp: App {
                 ListView()
             }
             .environment(listViewModel)
+            .tint(.accentColor)
         }
     }
 }

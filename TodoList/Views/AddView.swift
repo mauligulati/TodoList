@@ -25,7 +25,7 @@ struct AddView: View {
                     .frame(height: 50)
                     .background(
                         RoundedRectangle(cornerRadius: 10)
-                            .fill(Color.gray.opacity(0.2))
+                            .fill(Color(uiColor: .secondarySystemBackground))
                     )
                 
                 Button {
@@ -73,9 +73,18 @@ struct AddView: View {
     }
 }
 
-#Preview {
+#Preview("Add View – Light Mode") {
     NavigationStack {
         AddView()
     }
     .environment(ListViewModel())
+    .preferredColorScheme(.light)
+}
+
+#Preview("Add View – Dark Mode") {
+    NavigationStack {
+        AddView()
+    }
+    .environment(ListViewModel())
+    .preferredColorScheme(.dark)
 }
