@@ -26,12 +26,12 @@ A beautifully designed **SwiftUI TodoList App** following **MVVM architecture**,
 
   <p align="center">
     <img src="https://github.com/user-attachments/assets/5d6d417c-fa58-46b3-aed8-bce01f1f519c" width="300"/><br/>
-    <em>🌞 Dark Mode</em>
+    <em>🌙 Dark Mode</em>
   </p>
 
   <p align="center">
     <img src="https://github.com/user-attachments/assets/f43e2535-a4eb-4317-879e-ab910a9509f3" width="300"/><br/>
-    <em>🌙 Light Mode</em>
+    <em>🌞 Light Mode</em>
   </p>
 
 </details>
